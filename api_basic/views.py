@@ -153,3 +153,11 @@ class ArticleGenericViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixi
 
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
+
+# ModelViewSet
+class ArticleModelViewSet(viewsets.ModelViewSet):
+    """
+     A simple ViewSet for listing or retrieving and creating Article
+     """
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
