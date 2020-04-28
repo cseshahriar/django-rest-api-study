@@ -13,6 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.views import APIView
 
+from rest_framework import mixins
+from rest_framework import generics
+
 # Class base view for api
 class ArticleList(APIView):
     """
@@ -59,4 +62,32 @@ class ArticleDetail(APIView):
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+
+# generic class-based views
+
+class ArticleGenericListView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class ArticleGenericDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
