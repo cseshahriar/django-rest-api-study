@@ -146,3 +146,10 @@ class ArticleViewSet(viewsets.ViewSet):
         article = self.get_object(pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# Generic Viewset
+class ArticleGenericViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
