@@ -16,8 +16,10 @@ from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
 
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+# basic auth
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 
 # Class base view for api
 class ArticleList(APIView):
@@ -74,7 +76,8 @@ class ArticleGenericListView(mixins.ListModelMixin, mixins.CreateModelMixin, gen
     serializer_class = ArticleSerializer
 
     # basic authentication and permission
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    # authentication_classes = [SessionAuthentication, BasicAuthentication] # basic auth
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
